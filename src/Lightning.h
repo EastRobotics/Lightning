@@ -1,5 +1,6 @@
 /*Copyright (c) 2015 Frightening Lightning. All rights reserved.
 
+
  Developed by: Michael Hulet
                https://github.com/raysarebest
 
@@ -21,11 +22,10 @@ WITH THE SOFTWARE.*/
 //Make conditional #including of Lightning easily possible
 #ifndef LIGHTNING
 #define LIGHTNING
-#else
-#warning "LIGHTNING already defined elsewhere, so conditional #including of the Lightning/Lightning.h is impossible"
-#endif
 
-//Conditionally #include MHObject
+//#include MHObject if it hasn't been done so already
 #ifndef MHOBJECT
 #include "MHObject.h"
+#endif
+
 #endif

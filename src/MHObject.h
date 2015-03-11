@@ -1,5 +1,6 @@
 /*Copyright (c) 2015 Frightening Lightning. All rights reserved.
 
+
  Developed by: Michael Hulet
                https://github.com/raysarebest
 
@@ -21,9 +22,6 @@ WITH THE SOFTWARE.*/
 //Make conditional #including of MHObject possible
 #ifndef MHOBJECT
 #define MHOBJECT
-#else
-#warning "MHOBJECT already defined elsewhere, so conditional #including of Lightning/MHObject.h is impossible"
-#endif
 
 //MHObject -- The base class (or struct, I guess) of every Lightning object
 typedef struct _MHObject{
@@ -76,3 +74,5 @@ void autoInitializeObject(MHObject *object){
 		object = newObject();
 	}
 }
+
+#endif
