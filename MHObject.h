@@ -15,6 +15,10 @@ typedef struct _MHObject{
 
 //MHObject designated initializer -- Returns a pointer to a new MHObject
 MHObject *newObject();
+//Setter for tag property
+void setTagOfObject(MHObject *object, int newValue);
+//Getter for tag property
+int getTagOfObject(MHObject *object);
 
 //MARK: - Function Definitions
 
@@ -22,4 +26,24 @@ MHObject *newObject(){
 	MHObject new;
 	new.tag = 0;
 	return &new;
+}
+
+//MARK: - Property Setters
+
+void setTagOfObject(MHObject *object, int newValue){
+	//Automatic initialization in the case of NULL
+	if(!object){
+		object = newObject();
+	}
+	object->tag = newValue;
+}
+
+//MARK: - Property Getters
+
+int getTagOfObject(MHObject *object){
+	//Automatic initialization in the case of NULL
+	if(!object){
+		object = newObject();
+	}
+	return object->tag;
 }
