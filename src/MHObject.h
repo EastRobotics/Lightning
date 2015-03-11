@@ -19,6 +19,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 WITH THE SOFTWARE.*/
 
+//Silence any unreferenced function/variable warnings
+#pragma systemFile
+
 //Make conditional #including of MHObject possible
 #ifndef MHOBJECT
 #define MHOBJECT
