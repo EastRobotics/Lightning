@@ -20,6 +20,10 @@ void setTagOfObject(MHObject *object, int newValue);
 //Getter for tag property
 int getTagOfObject(MHObject *object);
 
+//MARK: - Private Function Declarations
+
+void autoInitializeObject(MHObject *object);
+
 //MARK: - Function Definitions
 
 MHObject *newObject(){
@@ -33,19 +37,22 @@ MHObject *newObject(){
 //MARK: - Property Setters
 
 void setTagOfObject(MHObject *object, int newValue){
-	//Automatic initialization in the case of NULL
-	if(!object){
-		object = newObject();
-	}
+	autoInitializeObject(object);
 	object->tag = newValue;
 }
 
 //MARK: - Property Getters
 
 int getTagOfObject(MHObject *object){
-	//Automatic initialization in the case of NULL
+	autoInitializeObject(object);
+	return object->tag;
+}
+
+//MARK: - Hopefully Private Functions
+
+void autoInitializeObject(MHObject *object){
+	//If it's NULL, we'll initialize it. Otherwise, we'll just let it be
 	if(!object){
 		object = newObject();
 	}
-	return object->tag;
 }
