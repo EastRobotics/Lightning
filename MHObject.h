@@ -23,8 +23,10 @@ int getTagOfObject(MHObject *object);
 //MARK: - Function Definitions
 
 MHObject *newObject(){
+	static int tag = 0;
 	MHObject new;
-	new.tag = 0;
+	new.tag = tag;
+	tag++;
 	return &new;
 }
 
