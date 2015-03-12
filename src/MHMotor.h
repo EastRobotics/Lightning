@@ -35,27 +35,35 @@ WITH THE SOFTWARE.*/
 typedef struct _MHMotor{
 	//MHMotor inherits directly from MHObject
 	MHObject super;
+	int port;
 }MHMotor;
 
 //MARK: - Function Declarations
 
 //MHMotor designated initializer -- Returns a pointer to an MHMotor
-MHMotor *newMotor();
+MHMotor *newMotorWithPort();
 //Getter for super property
 MHObject *getSuperOfMotor(MHMotor *motor);
+//Gettor for port property
+int getPortOfMotor(MHMotor *motor);
 
 //MARK: - Function Definitions
 
-MHMotor *newMotor(){
+MHMotor *newMotorWithPort(int port){
 	MHMotor new;
 	MHObject *super = newObject();
 	new.super = *super;
+	new.port = port;
 	return &new;
 }
 
 MHObject *getSuperOfMotor(MHMotor *motor){
 	//Turn the normal reference into a pointer and hand it back
 	return &motor->super;
+}
+
+int getPortOfMotor(MHMotor *motor){
+	return motor->port;
 }
 
 #endif
