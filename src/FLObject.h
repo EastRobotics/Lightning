@@ -19,60 +19,65 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 WITH THE SOFTWARE.*/
 
-//Make conditional #including of MHObject possible
-#ifndef MHOBJECT
-#define MHOBJECT
+//Prevent programmers from trying to use this on unsupported platforms
+#if defined(__LIGHTNING_UNSUPPORTED__) && (!defined(VEX) || !defined(VEX2) || !defined(VexIQ))
+#define __LIGHTNING_UNSUPPORTED__
+#ifndef LIGHTNING_UNSUPPORTED_WARNING
+#error "Lightning is only designed to function on VEX platforms"
+#else
+#warning "Lightning is only designed to function on VEX platforms"
+#endif
+#else
 
-//MHObject -- The base class (or struct, I guess) of every Lightning object
-typedef struct _MHObject{
-	//A conditionally-set tag, so it's easy to keep track of what's what
+//Make sure this file is only #included once
+#pragma once
+//Silence any "Unreference function/variable warnings
+#pragma systemFile
+
+//Make conditional #including of FLObject possible
+#ifndef __FLOBJECT_H__
+#define __FLOBJECT_H__
+//FLObject -- The base class (or struct, I guess) of every Lightning object
+typedef struct _FLObject{
+	//A unique tag, so it's easy to keep track of what's what
 	int tag;
-}MHObject;
+}FLObject;
 
 //MARK: - Function Declarations
 
-//MHObject designated initializer -- Returns a pointer to a new MHObject
-MHObject *newObject();
-//Setter for tag property
-void setTagOfObject(MHObject *object, int newValue);
+//FLObject designated initializer -- Returns a pointer to a new FLObject
+FLObject *newObject();
 //Getter for tag property
-int getTagOfObject(MHObject *object);
+int getTagOfObject(FLObject *object);
 
 //MARK: - Private Function Declarations
 
-void autoInitializeObject(MHObject *object);
+void autoInitializeObject(FLObject *object);
 
 //MARK: - Function Definitions
 
-MHObject *newObject(){
+FLObject *newObject(){
 	static int tag = 0;
-	MHObject new;
+	FLObject new;
 	new.tag = tag;
-	tag++;
+	++tag;
 	return &new;
-}
-
-//MARK: - Property Setters
-
-void setTagOfObject(MHObject *object, int newValue){
-	autoInitializeObject(object);
-	object->tag = newValue;
 }
 
 //MARK: - Property Getters
 
-int getTagOfObject(MHObject *object){
+int getTagOfObject(FLObject *object){
 	autoInitializeObject(object);
 	return object->tag;
 }
 
 //MARK: - Hopefully Private Functions
 
-void autoInitializeObject(MHObject *object){
+void autoInitializeObject(FLObject *object){
 	//If it's NULL, we'll initialize it. Otherwise, we'll just let it be
 	if(!object){
 		object = newObject();
 	}
 }
-
+#endif
 #endif
