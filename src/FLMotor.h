@@ -47,18 +47,36 @@ typedef struct _FLMotor{
 	tMotor port;
 }FLMotor;
 
+//FLMotorSpeed -- Enumeration to define commonly-used motor speeds
+typedef enum _FLMotorSpeed{
+	//To stop is to not move. Duh.
+ FLMotorSpeedStop = 0,
+ //If you wanna stall the motors, it's safe to put it at a speed of 30, but that's about the lowest it's safe to go
+ FLMotorSpeedStall = 30,
+ //31 is about the minimum speed you can assign to a motor before it begins to twitch
+ FLMotorSpeedMin = 31,
+ //While a true half is 63.5, we're defining integer constants here, so we'll give it the high end
+ FLMotorSpeedHalf = 64,
+ //For some reason, the maximum possible power for a VEX motor is 127. Don't ask me why.
+ FLMotorSpeedMax = 127
+}FLMotorSpeed;
+
 //MARK: - Function Declarations
 
 //FLMotor designated initializer -- Returns a pointer to an FLMotor
-FLMotor *newMotorWithPort();
+FLMotor *motorForPort(tMotor port);
 //Getter for super property
-FLObject *getSuperOfMotor(FLMotor *motor);
-//Gettor for port property
-tMotor getPortOfMotor(FLMotor *motor);
+FLObject *getSuperOfMotor(FLMotor *engine);
+//Gettor for port pportrty
+tMotor getPortOfMotor(FLMotor *engine);
+//Setter for speed property
+void setSpeedOfMotor(FLMotor *engine, int speed);
+//Getter for speed property
+short getSpeedOfMotor(FLMotor *engine);
 
 //MARK: - Function Definitions
 
-FLMotor *newMotorWithPort(tMotor port){
+FLMotor *motorForPort(tMotor port){
 	//TODO: - Make sure a motor for a port can only be created once
 	FLMotor new;
 	FLObject *super = newObject();
@@ -67,13 +85,28 @@ FLMotor *newMotorWithPort(tMotor port){
 	return &new;
 }
 
-FLObject *getSuperOfMotor(FLMotor *motor){
+FLObject *getSuperOfMotor(FLMotor *engine){
 	//Turn the normal reference into a pointer and hand it back
-	return &motor->super;
+	return &engine->super;
 }
 
-tMotor getPortOfMotor(FLMotor *motor){
-	return motor->port;
+tMotor getPortOfMotor(FLMotor *engine){
+	return engine->port;
+}
+
+void setSpeedOfMotor(FLMotor *engine, int speed){
+	//Make the physical motor turn at the specified speed
+	motor[getPortOfMotor(engine)] = speed;
+}
+
+//Compatibility overload to silence any compiler warnings about typecasting
+void setSpeedOfMotor(FLMotor *engine, FLMotorSpeed speed){
+	setSpeedOfMotor(engine, (int)speed);
+}
+
+short getSpeedOfMotor(FLMotor *engine){
+	//Return the speed of the physical motor
+	return motor[getPortOfMotor(engine)];
 }
 #endif
 #endif
